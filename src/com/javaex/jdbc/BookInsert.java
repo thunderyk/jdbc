@@ -21,7 +21,7 @@ public class BookInsert {
 						conn = DriverManager.getConnection(url, "webdb", "webdb"); //db url, 아이디, 비밀번호
 						
 						// 3. SQL문 준비 / 바인딩 / 실행
-						String query = "insert into book values (seq_author_id.nextval, ?, ?,?,?)";
+						String query = "insert into book values (seq_book_id.nextval, ?, ?,?,?)";
 						pstmt = conn.prepareStatement(query);
 						
 						pstmt.setString(1, "해를 품은 달");
