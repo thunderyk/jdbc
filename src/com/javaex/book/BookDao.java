@@ -32,9 +32,9 @@ public class BookDao extends Dao{
 			String query = "";
 			query+="update book ";
 			query+= "set title = ?, ";
-			query+=	"pubs = ?, ";
-			query+= "pub_date=?, ";
-			query+= "author_id=? ";
+			query+=	"	 pubs = ?, ";
+			query+= "	 pub_date=?, ";
+			query+= "	 author_id=? ";
 			query+= "where book_id = ?";
 			
 			pstmt = conn.prepareStatement(query);
@@ -73,10 +73,10 @@ public class BookDao extends Dao{
 		try {
 			String query = "";
 			query += "select book_id, ";
-			query += "title, ";
-			query += "pubs,";
-			query += "pub_date,";
-			query += "author_id ";
+			query += "		 title, ";
+			query += "	     pubs,";
+			query += "		 pub_date,";
+			query += "		 author_id ";
 			query += "from book";
 
 			pstmt = conn.prepareStatement(query);
@@ -95,7 +95,44 @@ public class BookDao extends Dao{
 				lbv.add(bVo);
 			}
 		}catch(Exception e) {
-			System.out.println("erroe"+e);
+			System.out.println("error"+e);
+		}
+		super.dbDisConnect();
+		
+		return lbv;
+	}
+	public List<BookVo> getAllBookList() {
+		super.dbConnect();
+		List<BookVo> lbv = new ArrayList<BookVo>();
+		try {
+			String query = "";
+			query += "select book_id, ";
+			query += "		 title,";
+			query += "		 pubs,";
+			query += "		 pub_date,";
+			query += "	     b.author_id, ";
+			query += "	     author_name, ";
+			query += "		 author_desc ";
+			query += "from book b, author a ";
+			query +="where a.author_id = b.author_id";
+			pstmt = conn.prepareStatement(query);
+			rs = pstmt.executeQuery();
+
+			// 4.결과처리
+
+			while (rs.next()) {
+				BookVo bVo = new BookVo();
+				bVo.setBookId(rs.getInt(1));
+				bVo.setBookTitle(rs.getString(2));
+				bVo.setBookPubs(rs.getString(3));
+				bVo.setBookPubDate(rs.getDate(4));
+				bVo.setAuthorId(rs.getInt(5));
+				bVo.setAuthorName(rs.getString(6));
+				bVo.setAuthorDesc(rs.getString(7));
+				lbv.add(bVo);
+			}
+		}catch(Exception e) {
+			System.out.println("error"+e);
 		}
 		super.dbDisConnect();
 		

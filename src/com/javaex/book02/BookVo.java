@@ -9,6 +9,8 @@ public class BookVo {
 	private String bookPubs;
 	private Date bookPubDate;
 	private int authorId;
+	private String authorName;
+	private String authorDesc;
 	
 	public BookVo() {
 		
@@ -55,6 +57,22 @@ public class BookVo {
 	public void setBookPubDate(Date bookPubDate) {
 		this.bookPubDate = bookPubDate;
 	}
+	public String getAuthorName() {
+		return authorName;
+	}
+
+	public String getAuthorDesc() {
+		return authorDesc;
+	}
+
+	public void setAuthorName(String authorName) {
+		this.authorName = authorName;
+	}
+
+	public void setAuthorDesc(String authorDesc) {
+		this.authorDesc = authorDesc;
+	}
+
 	public void setAuthorId(int authorId) {
 		this.authorId = authorId;
 	}
