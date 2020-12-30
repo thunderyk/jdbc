@@ -1,50 +1,14 @@
 package com.javaex.book;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AuthorDao {
+public class AuthorDao extends Dao{
 
-	private Connection conn = null;
-	private PreparedStatement pstmt = null;
-	private ResultSet rs = null;
 	
-	public void dbConnect() {
-			try {
-			// 1. JDBC 드라이버 (Oracle) 로딩
-			Class.forName("oracle.jdbc.driver.OracleDriver");
-
-			// 2. Connection 얻어오기
-			String url = "jdbc:oracle:thin:@localhost:1521:xe";
-			conn = DriverManager.getConnection(url, "webdb", "webdb"); // db url, 아이디, 비밀번호
-
-		} catch (ClassNotFoundException e) {
-			System.out.println("error: 드라이버 로딩 실패 - " + e);
-		} catch (SQLException e) {
-			System.out.println("error:" + e);
-		}
-	}
-	
-	public void dbDisConnect() {
-		try {
-			if (rs != null) { rs.close(); }
-			if (pstmt != null) {
-				pstmt.close();
-			}
-			if (conn != null) {
-				conn.close();
-			}
-		} catch (SQLException e) {
-			System.out.println("error:" + e);
-		}
-	}
 	
 	public void authorInsert(AuthorVo authorVo) {
+		super.dbConnect();
 		try {
 			String query = "insert into author values (seq_author_id.nextval, ?, ?)";
 			pstmt = conn.prepareStatement(query);
@@ -58,8 +22,10 @@ public class AuthorDao {
 		} catch (Exception e) {
 			System.out.println("error"+e);
 		}
+		super.dbDisConnect();
 	}
 	public void authorUpdate(AuthorVo authorVo) {
+		super.dbConnect();
 		try {
 			String query = "";
 			query+="update author set author_name=?, author_desc=? where author_id=?";
@@ -73,8 +39,10 @@ public class AuthorDao {
 		}catch(Exception e) {
 			System.out.println("error"+e);
 		}
+		super.dbDisConnect();
 	}
 	public void authorDelete(int num) {
+		super.dbConnect();
 		try {
 			String query = "";
 			query+="delete from author where author_id = ?";
@@ -86,8 +54,10 @@ public class AuthorDao {
 		}catch(Exception e) {
 			System.out.println("error"+e);
 		}
+		super.dbDisConnect();
 	}
 	public List<AuthorVo> getAuthorList() {
+		super.dbConnect();
 		List<AuthorVo> lav = new ArrayList<AuthorVo>();
 		try {
 			String query = "";
@@ -111,8 +81,8 @@ public class AuthorDao {
 		}catch(Exception e) {
 			System.out.println("erroe"+e);
 		}
-		// 3. SQL문 준비 / 바인딩 / 실행
 
+		super.dbDisConnect();
 		return lav;
 	}
 }

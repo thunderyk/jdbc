@@ -9,10 +9,8 @@ public class BookAuthorApp {
 	public static void main(String[] args) {
 
 		AuthorDao authorDao = new AuthorDao();
-		authorDao.dbConnect();
 		BookDao bookDao = new BookDao();
-		bookDao.dbConnect();
-
+		
 		// 작가 6명 등록
 		// AuthorDao, AuthorVo 이용해서 등록
 		AuthorVo authorVo01 = new AuthorVo("김문열", "경북 양양");
@@ -52,8 +50,7 @@ public class BookAuthorApp {
 		bookDao.BookInsert(bookVo02);
 		BookVo bookVo03 = new BookVo("토지", "마로니에북스", Date.valueOf("2012-08-15"), authorList.get(1).getAuthorId());
 		bookDao.BookInsert(bookVo03);
-		BookVo bookVo04 = new BookVo("유시민의 글쓰기 특강", "생각의길", Date.valueOf("2015-04-01"),
-				authorList.get(2).getAuthorId());
+		BookVo bookVo04 = new BookVo("유시민의 글쓰기 특강", "생각의길", Date.valueOf("2015-04-01"), authorList.get(2).getAuthorId());
 		bookDao.BookInsert(bookVo04);
 		BookVo bookVo05 = new BookVo("패션왕", "중앙북스(books)", Date.valueOf("2012-02-22"), authorList.get(3).getAuthorId());
 		bookDao.BookInsert(bookVo05);
@@ -102,12 +99,7 @@ public class BookAuthorApp {
 				}
 			}
 		}
-
 		sc.close();
-
-		authorDao.dbDisConnect();
-		bookDao.dbDisConnect();
-
 	}
 
 	public static void authorPrint(List<AuthorVo> authorList) {
